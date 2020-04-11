@@ -12,21 +12,21 @@ def title_screen_selections():
         setup_game()
     elif option.lower() == "help":
         help_menu()
-    elif option.lower() == "back":
-        title_screen()
     elif option.lower() == "quit":
+        print("Shutting off. Thank you for playing.")
+        os.system('clear')
         sys.exit()
         # If command is not within the below array it will keep bringing up an input
-    while option.lower() not in ['play', 'help', 'back', 'quit']:
+    while option.lower() not in ['play', 'help', 'quit']:
         print("Please enter a valid command.")
         option = input("> ")
-        if option.lower() == ("play"):
+        if option.lower() == "play":
             setup_game()
-        elif option.lower() == ("help"):
+        elif option.lower() == "help":
             help_menu()
-        elif option.lower() == ("back"):
-            title_screen()
-        elif option.lower() == ("quit"):
+        elif option.lower() == "quit":
+            print("Shutting off. Thank you for playing.")
+            os.system('clear')
             sys.exit()
 
 
@@ -64,8 +64,20 @@ def help_menu():
     print('###########################################')
     print('###########################################')
     print('                ~ Back ~                   ')
-    title_screen_selections()
-
+    option = input("> ")
+    if option.lower() == "back":
+        title_screen()
+    elif option.lower() == "quit":
+        sys.exit()
+    while option.lower() not in ['back', 'quit']:
+        print("Invalid command. Try typing 'Back' if you want to go back to the main menu.")
+        print("Else, you can quit by typing 'Quit' ")
+        option = input("> ")
+        if option.lower() == "back":
+            title_screen()
+        elif option.lower() == "quit":
+            print("Shutting off. Thank you for playing.")
+            sys.exit()
 
 # Setup Game
 
