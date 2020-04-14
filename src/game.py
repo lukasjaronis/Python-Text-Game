@@ -1,11 +1,9 @@
 import sys
 import os
-import numpy as np
 from time import sleep
 from items import Item
 from player import Player
 from room import room
-import array as arr
 
 
 # Colors
@@ -148,6 +146,15 @@ def game_prompt():
             if action.lower() == i.name.lower():
                 item = i.name.lower()
                 user.add_item(item)
+                current_room_items_array = room[user.player_location].items
+                index = current_room_items_array.index(i)
+                del acceptable_item_actions[index]
+
+
+        # for i in acceptable_item_actions:
+        #     if action.lower() == i.name.lower():
+        #         item = i.name.lower()
+        #         user.add_item(item)
 
 
 
