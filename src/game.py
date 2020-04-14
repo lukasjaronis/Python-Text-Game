@@ -149,45 +149,16 @@ def game_prompt():
                 current_room_items_array = room[user.player_location].items
                 index = current_room_items_array.index(i)
                 del acceptable_item_actions[index]
+    if action.lower() == 'drop':
+        print('Which item do you want to drop?')
+        action = input('> ')
+        acceptable_item_actions = user.items
+        for i in acceptable_item_actions:
+            # this just finds input = in array
+            if action.lower() == i.lower():
+                user.drop_item(i)
 
 
-        # for i in acceptable_item_actions:
-        #     if action.lower() == i.name.lower():
-        #         item = i.name.lower()
-        #         user.add_item(item)
-
-
-
-
-
-
-            #
-            # for x in range(0, len(acceptable_item_actions) - 1):
-            #     print(x)
-
-
-                # print(acceptable_item_actions.index(i))
-                # item_parse = item_parser(i)
-                #
-                #
-                #
-                # if (i.name, i.description, i.power) == (item_parse.name, item_parse.description, item_parse.power):
-                #     del room[user.player_location].items[0]
-
-
-
-
-
-                # # an array of items
-                # for x in room[user.player_location].items:
-                #     # item_parse is a function that takes in x and returns x.name, x.description, and x.power, then returns itself.
-                #     item_checker = item_parser(x)
-                #     print(type(item_checker))
-                #     print(type(x))
-                #     print(x == item_checker)
-                #     if x in item_checker:
-                #         print(x)
-                #         print('i got here?')
 
 
 # Setup Game

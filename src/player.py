@@ -36,4 +36,4 @@ class Player:
     def drop_item(self, item):
         # removing item from array
         self.items.remove(item)
-        print(f"{self.name}, you've dropped {self.item}!")
+        print(f"You've dropped {item}!")
