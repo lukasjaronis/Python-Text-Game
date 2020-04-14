@@ -9,12 +9,14 @@
 #############
 # Current Room
 
+
 class Player:
-    def __init__(self, name, player_location):
-        self.name = name
-        self.player_role = str
+    def __init__(self):
+        self.player_status = True
+        self.name = None
+        self.player_role = None
         # starting point of the player.
-        self.player_location = player_location
+        self.player_location = 'a1'
         # We're checking if player has finished the game or not
         self.end_game = False
         # player items
@@ -29,7 +31,7 @@ class Player:
     def add_item(self, item):
         # adding passed in item to the array
         self.items.append(item)
-        print(f"{self.name}, you've picked up {self.item}!")
+        print(f"You've picked up {item}!")
 
     def drop_item(self, item):
         # removing item from array
