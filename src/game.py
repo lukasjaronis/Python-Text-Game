@@ -3,7 +3,7 @@ import os
 from time import sleep
 from items import Item
 from player import Player
-from room import room
+from room import room, Room
 
 
 # Colors
@@ -110,24 +110,25 @@ def game_loop():
         game_prompt()
 
 
-def player_status():
-    if user.player_status is True:
-        print('\nUser Inventory\n')
-        print(user.items)
-    else:
-        print('You have nothing in your inventory!')
-
-
 def item_parser(i):
     item = Item(i.name, i.description, i.power)
     return item
 
 
+def show_items(item_array):
+    if user.player_status is True:
+        print(f'{bcolors.FAIL}\n\tUser Inventory{bcolors.ENDC}\n')
+        if not user.items:
+            print('\tThere is nothing in your inventory!')
+        else:
+            for x in item_array:
+                print(f'\t ~ {x}')
+
+
 def game_prompt():
-    # os.system('cls')
     print_location()
-    player_status()
-    print('\n#######################\n')
+    show_items(user.items)
+    print(f'\n\t{bcolors.WARNING}..........{bcolors.ENDC}\n')
     print('What do you want to do?\n')
     print('[Quit, Pick Up, Drop, or Walk]\n')
     action = input('> ')
@@ -144,21 +145,60 @@ def game_prompt():
         acceptable_item_actions = room[user.player_location].items
         for i in acceptable_item_actions:
             if action.lower() == i.name.lower():
-                item = i.name.lower()
+                item = i
                 user.add_item(item)
                 current_room_items_array = room[user.player_location].items
                 index = current_room_items_array.index(i)
                 del acceptable_item_actions[index]
+
     if action.lower() == 'drop':
         print('Which item do you want to drop?')
         action = input('> ')
-        acceptable_item_actions = user.items
-        for i in acceptable_item_actions:
-            # this just finds input = in array
-            if action.lower() == i.lower():
+        for i in user.items:
+            acceptable_item_actions = i.name
+            if action.lower() == acceptable_item_actions.lower():
+                # if this is true, then we drop the entire item
                 user.drop_item(i)
+                # adds this dropped item in the current room
+                room[user.player_location].items.append(Item(i.name, i.description, i.power))
+
+    if action.lower() == 'walk':
+        print('Where do you want to go?')
+        print('Places you can go...')
+        current_room = user.player_location
+        # getting the keys of all possible rooms
+        for key in room:
+            # checking if key = current room key
+            curr = ""
+            curr_key = ""
+            if key.lower() in current_room:
+                # getting the current room name
+                curr = room[current_room].name
+                curr_key = key
+
+            # making sure these exist
+            if curr and curr_key:
+                for x in room:
+                    # creating an array
+                    key_array = []
+                    key_array.append(x)
+                    if len(key_array) == len(x):
+                        print(key_array)
+                    # checking if curr is inside array
+                    # if curr in key_array:
+                    #     print('its in here!')
+                    #     del key_array[curr]
+                    #     print(key_array)
 
 
+
+            # curr, *rest = room[not key]
+            # print(rest)
+
+        # walk_input = input('> ')
+        # dest = walk_input
+        # # would be like a1, a2, a3, a4, etc
+        # current_room = room[user.player_location]
 
 
 # Setup Game
@@ -171,19 +211,20 @@ def setup_game():
         sys.stdout.write(character)
         sys.stdout.flush()
     player_name = input('> ')
+    os.system('cls')
     user.name = player_name.lower()
     if player_name == 'monika':
-        question_two = f'{player_name.capitalize()}... is that you? I knew you would play this game :)\n'
+        question_two = f'{player_name.capitalize()}! I know you!\n'
         for character in question_two:
             sleep(0.06)
             sys.stdout.write(character)
             sys.stdout.flush()
-        question_two_addition = f'You can even play yourself!\n'
+        question_two_addition = f'In this game you can play yourself!\n'
         for character in question_two_addition:
             sleep(0.06)
             sys.stdout.write(character)
             sys.stdout.flush()
-        question_three = f'Options include...\n'
+        question_three = f'The roles to choose from are...\n'
         for character in question_three:
             sleep(0.06)
             sys.stdout.write(character)

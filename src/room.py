@@ -37,15 +37,13 @@ class Room:
             self.items = items
 
     def __str__(self):
-        output = f"{bcolors.HEADER}You are in {self.name}. {self.description}{bcolors.ENDC}\n"
-        print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(output))))
+        output = f"\n\t{bcolors.OKBLUE}You are in {self.name}.\n \n\t{self.description}{bcolors.ENDC}\n"
         for character in output:
             sleep(0.05)
             sys.stdout.write(character)
             sys.stdout.flush()
-        print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(output))))
         if self.items:
-            output_items = f"\nThe following items in this area are...\n"
+            output_items = f"\n{bcolors.FAIL}The following items in this area are...{bcolors.ENDC}\n"
 
             for character in output_items:
                 sleep(0.05)
@@ -63,28 +61,40 @@ class Room:
 # S - South
 # W - West
 
+# Monika's Bedroom => Mario's Bedroom
 # Monika's Bedroom => Hallway
+# Mario's Bedroom => Monika's Bedroom
+# Mario's Bedroom => Hallway
 # Hallway => Monika's Bedroom
+# Hallway => Mario'S Bedroom
 # Hallway => Outside
 
 room = {
-    'a1': Room("Monika\'s Bedroom",
-               "\nAn adequate room, a white room, a lot of arts and a lot of plants. A cozy room."),
-    'a2': Room("a hallway", "The hallway leading to the living room."),
-    'a3': Room("Outside", "The backyard")
+    'a1': Room("Monika\'s Bedroom", 'An delightful room, a white room, a lot of art and a lot of plants. A cozy room.'),
+    'a2': Room('Mario\'s Bedroom', 'The room containing the worlds fastest computer, able to hack into the mainframe in less than 1 second.'),
+    'a3': Room("a hallway", "The hallway leading to the living room."),
+    'a4': Room("Outside", "The backyard")
 }
 
 # Linking rooms together.
-room['a1'].n_to = 'a2'
-room['a2'].s_to = 'a1'
-room['a2'].n_to = 'a3'
+room['a1'].n_to = 'a3'  # Monika's Bedroom => Hallway
+room['a1'].e_to = 'a2'  # Monika's Bedroom => Mario's Bedroom
+
+room['a2'].s_to = 'a1'  # Mario's Bedroom => Monika's Bedroom
+room['a2'].e_to = 'a3'  # Mario's Bedroom => Hallway
+
+room['a3'].s_to = 'a1'  # Hallway => Monika's Bedroom
+room['a3'].e_to = 'a2'  # Hallway => Mario'S Bedroom
+
+room['a3'].n_to = 'a3'
 
 # Setting up Items
 room['a1'].items = [Item('Kai', 'The Squirrel Hunter', 'Powerful K9\'s'),
                     Item('Blanket', 'A blanket with doggos scent on it', 'Snuggle attack'),
-                    Item('Scientific Books', 'Learn the Wonders of the Universe', 'The power within.')]
-room['a2'].items = [Item('Bubba', 'The wise one', 'Rat Attack')]
-room['a3'].items = ['Flower']
-
-
-
+                    Item('Scientific Books', 'Learn the Wonders of the Universe', 'The power within')]
+room['a2'].items = [Item('Vape', 'The cloud master 3000', 'Can kill by sick clouds'),
+                    Item('Computer', 'JumpyWizard Mega v3', 'Can kill by graphics card'),
+                    Item('Beer', 'Fat Tire', 'Black out')
+                    ]
+room['a3'].items = [Item('Bubba', 'The wise one', 'Rat Attack')]
+room['a4'].items = [Item('Flower', 'Sunflower', 'Powerful flowery smell')]

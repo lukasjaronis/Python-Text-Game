@@ -16,7 +16,7 @@ class Player:
         self.name = None
         self.player_role = None
         # starting point of the player.
-        self.player_location = 'a1'
+        self.player_location = 'a3'
         # We're checking if player has finished the game or not
         self.end_game = False
         # player items
@@ -31,9 +31,9 @@ class Player:
     def add_item(self, item):
         # adding passed in item to the array
         self.items.append(item)
-        print(f"You've picked up {item}!")
+        print(f"{item.name} has been picked up!")
 
     def drop_item(self, item):
         # removing item from array
         self.items.remove(item)
-        print(f"You've dropped {item}!")
+        print(f"{item.name} has been dropped in this room!")
