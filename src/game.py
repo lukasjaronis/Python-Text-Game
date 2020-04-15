@@ -166,24 +166,44 @@ def game_prompt():
         print('Where do you want to go?')
         print('Places you can go...')
         current_room = user.player_location
+        curr = ""
+        curr_key = ""
         # getting the keys of all possible rooms
         for key in room:
             # checking if key = current room key
-            curr = ""
-            curr_key = ""
             if key.lower() in current_room:
                 # getting the current room name
                 curr = room[current_room].name
                 curr_key = key
 
             # making sure these exist
-            if curr and curr_key:
-                for x in room:
+        if curr and curr_key:
+            # creating an array outside of the for loop
+            key_array = []
+            for x in room:
+                # appending to array
+                key_array.append(x)
+            if curr_key in key_array:
+                print(curr_key)
+                # if its in the key_array lets return the key_array without it
+                altered_array = key_array[:]
+                altered_array.remove(curr_key)
+                print(altered_array)
+
+
+            #     # checking if current room key is inside this array
+            # if curr_key in key_array:
+            #     # if its in here return updated array without current room key
+            #     curr_key, *rest = key_array
+
+
+
                     # creating an array
-                    key_array = []
-                    key_array.append(x)
-                    if len(key_array) == len(x):
-                        print(key_array)
+
+                    # key_array = []
+                    # key_array.append(x)
+                    # if len(key_array) == len(x):
+                    #     print(key_array)
                     # checking if curr is inside array
                     # if curr in key_array:
                     #     print('its in here!')
