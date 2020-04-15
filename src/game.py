@@ -184,11 +184,14 @@ def game_prompt():
                 # appending to array
                 key_array.append(x)
             if curr_key in key_array:
-                print(curr_key)
-                # if its in the key_array lets return the key_array without it
+                # copying key_array and replacing it with altered_array so we don't effect the original
                 altered_array = key_array[:]
+                # removing the current key from the altered array
                 altered_array.remove(curr_key)
-                print(altered_array)
+
+        for m in altered_array:
+            print(m)
+
 
 
             #     # checking if current room key is inside this array

@@ -16,7 +16,7 @@ class Player:
         self.name = None
         self.player_role = None
         # starting point of the player.
-        self.player_location = 'a3'
+        self.player_location = 'a2'
         # We're checking if player has finished the game or not
         self.end_game = False
         # player items
