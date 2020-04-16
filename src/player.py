@@ -1,22 +1,10 @@
-# Player Information
-# Items
-# Player Name
-# Player Role
-#############
-# Monika
-# Kai
-# Squirrel
-#############
-# Current Room
-
-
 class Player:
     def __init__(self):
         self.player_status = True
         self.name = None
         self.player_role = None
         # starting point of the player.
-        self.player_location = 'a2'
+        self.player_location = 'a1'
         # We're checking if player has finished the game or not
         self.end_game = False
         # player items

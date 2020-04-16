@@ -110,11 +110,6 @@ def game_loop():
         game_prompt()
 
 
-def item_parser(i):
-    item = Item(i.name, i.description, i.power)
-    return item
-
-
 def show_items(item_array):
     if user.player_status is True:
         print(f'{bcolors.FAIL}\n\tUser Inventory{bcolors.ENDC}\n')
@@ -126,6 +121,7 @@ def show_items(item_array):
 
 
 def game_prompt():
+    os.system('cls')
     print_location()
     show_items(user.items)
     print(f'\n\t{bcolors.WARNING}..........{bcolors.ENDC}\n')
@@ -135,11 +131,13 @@ def game_prompt():
     acceptable_actions = ['quit', 'pick up', 'drop', 'walk']
     # while action input is NOT in acceptable_actions + lowered, do this..
     while action.lower() not in acceptable_actions:
+        Room.new_game = False
         print('Unknown command. Try again\n')
         action = input('>')
     if action.lower() == 'quit':
         sys.exit()
     if action.lower() == 'pick up':
+        Room.new_game = False
         print('Which item do you wish to pick up?')
         action = input('> ')
         acceptable_item_actions = room[user.player_location].items
@@ -152,6 +150,7 @@ def game_prompt():
                 del acceptable_item_actions[index]
 
     if action.lower() == 'drop':
+        Room.new_game = False
         print('Which item do you want to drop?')
         action = input('> ')
         for i in user.items:
@@ -163,8 +162,13 @@ def game_prompt():
                 room[user.player_location].items.append(Item(i.name, i.description, i.power))
 
     if action.lower() == 'walk':
-        print('Where do you want to go?')
-        print('Places you can go...')
+        Room.new_game = False
+        print(f'\n\t{bcolors.WARNING}..........{bcolors.ENDC}\n')
+        print('\n\tWhere do you want to go?')
+        print('\tPlaces you can go...\n')
+        print('\t\n Use [N,E,S,W] to navigate.')
+        print('\t\n You can also type in north, east, south, or west')
+        print(f'\n\t{bcolors.WARNING}..........{bcolors.ENDC}\n')
         current_room = user.player_location
         curr = ""
         curr_key = ""
@@ -188,35 +192,63 @@ def game_prompt():
                 altered_array = key_array[:]
                 # removing the current key from the altered array
                 altered_array.remove(curr_key)
+                final = []
+                if curr_key == 'a1':
+                    room_a2 = altered_array[:]
+                    room_a2.remove('a4')
+                    final = room_a2
+                elif curr_key == 'a2':
+                    room_a2 = altered_array[:]
+                    room_a2.remove('a4')
+                    final = room_a2
 
-        for m in altered_array:
-            print(m)
+                elif curr_key == 'a3':
+                    final = altered_array
 
+                for i in final:
+                    value = room[i].name
+                    print(f'\n\t{value}')
 
+                # ...........................
+                if curr_key == 'a1':
+                    print('\nSeems like you can only go north or east.')
+                elif curr_key == 'a2':
+                    print('\nSeems like you can only go south or east.')
+                elif curr_key == 'a3':
+                    print('\nSeems like you can only go south, east or north.')
+                # ...........................
 
-            #     # checking if current room key is inside this array
-            # if curr_key in key_array:
-            #     # if its in here return updated array without current room key
-            #     curr_key, *rest = key_array
-
-
-
-                    # creating an array
-
-                    # key_array = []
-                    # key_array.append(x)
-                    # if len(key_array) == len(x):
-                    #     print(key_array)
-                    # checking if curr is inside array
-                    # if curr in key_array:
-                    #     print('its in here!')
-                    #     del key_array[curr]
-                    #     print(key_array)
-
-
-
-            # curr, *rest = room[not key]
-            # print(rest)
+                # the logic here has to be relative to what info is in player location
+                walk_input = input('> ')
+                dest = walk_input
+                UP = "up", 'north', 'n'
+                DOWN = "down", "south", 's'
+                LEFT = "left", "west", 'w'
+                RIGHT = "right", "east", 'e'
+                if curr_key == 'a1':
+                    if dest in UP:
+                        user.player_location = 'a3'
+                    elif dest in RIGHT:
+                        user.player_location = 'a2'
+                    else:
+                        print('You cannot go there!')
+                if curr_key == 'a2':
+                    if dest in DOWN:
+                        user.player_location = 'a1'
+                    elif dest in RIGHT:
+                        user.player_location = 'a3'
+                    else:
+                        print('You cannot go there!')
+                if curr_key == 'a3':
+                    if dest in DOWN:
+                        user.player_location = 'a1'
+                    elif dest in RIGHT:
+                        user.player_location = 'a2'
+                    elif dest in UP:
+                        user.player_location = 'a4'
+                    elif dest in LEFT:
+                        print('You cannot go there!')
+                os.system('cls')
 
         # walk_input = input('> ')
         # dest = walk_input
@@ -236,6 +268,7 @@ def setup_game():
     player_name = input('> ')
     os.system('cls')
     user.name = player_name.lower()
+
     if player_name == 'monika':
         question_two = f'{player_name.capitalize()}! I know you!\n'
         for character in question_two:
@@ -304,6 +337,71 @@ def setup_game():
                         describe = 'The Ultra Fast Crackhead'
                     os.system('cls')
                     print(f' You are {role.capitalize()}, {describe}!')
+
+    if player_name != 'monika':
+        question_two = f'Hello {player_name.capitalize()}!\n'
+        for character in question_two:
+            sleep(0.06)
+            sys.stdout.write(character)
+            sys.stdout.flush()
+        question_three = f'The roles to choose from are...\n'
+        for character in question_three:
+            sleep(0.06)
+            sys.stdout.write(character)
+            sys.stdout.flush()
+        question_four = f'Monika, Kai, or Squirrel.\n'
+        for character in question_four:
+            sleep(0.06)
+            sys.stdout.write(character)
+            sys.stdout.flush()
+        # valid options for roles
+        valid_options = ['monika', 'kai', 'squirrel']
+        # player inputs name
+        role = input('> ')
+        # the Player class player_role gets updated with the inputed value
+        user.player_role = role
+        # taking role that is converted to lowercase and checking if its in valid_options
+        if role.lower() in valid_options:
+            if role.lower() == 'monika':
+                describe = 'The Artist'
+            elif role.lower() == 'kai':
+                describe = 'The Squirrel Hunter'
+            elif role.lower() == 'squirrel':
+                describe = 'The Ultra Fast Crackhead'
+            os.system('cls')
+            print(f' You are {role.capitalize()}, {describe}!\n')
+            os.system('cls')
+            startup = '###'
+            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
+            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
+            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
+            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
+            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
+            for character in startup:
+                sleep(0.06)
+                sys.stdout.write(character)
+                sys.stdout.flush()
+
+            game_loop()
+
+        else:
+            while role.lower() not in valid_options:
+                os.system('cls')
+                print('Invalid command, try again.\n')
+                print('Options are... \n')
+                print('Monika, Kai, or Squirrel.\n')
+                role = input('> ')
+                if role.lower() in valid_options:
+                    user.player_role = role
+                    if role == 'monika':
+                        describe = 'The Artist'
+                    elif role == 'kai':
+                        describe = 'The Squirrel Hunter'
+                    elif role == 'squirrel':
+                        describe = 'The Ultra Fast Crackhead'
+                    os.system('cls')
+                    print(f' You are {role.capitalize()}, {describe}!')
+
     else:
         question_two = f'{player_name}, what role would you like to play?\n'
         for character in question_two:
