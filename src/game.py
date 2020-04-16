@@ -124,14 +124,14 @@ def game_prompt():
     os.system('cls')
     print_location()
     show_items(user.items)
-    print(f'\n\t{bcolors.WARNING}..........{bcolors.ENDC}\n')
+    print(f'\n{bcolors.OKGREEN}******************{bcolors.ENDC}')
     print('What do you want to do?\n')
-    print('[Quit, Pick Up, Drop, or Walk]\n')
+    print('[Quit, Pick Up, Drop, or Walk]')
+    print(f'{bcolors.OKGREEN}******************{bcolors.ENDC}')
     action = input('> ')
     acceptable_actions = ['quit', 'pick up', 'drop', 'walk']
     # while action input is NOT in acceptable_actions + lowered, do this..
     while action.lower() not in acceptable_actions:
-        Room.new_game = False
         print('Unknown command. Try again\n')
         action = input('>')
     if action.lower() == 'quit':
@@ -162,16 +162,19 @@ def game_prompt():
                 room[user.player_location].items.append(Item(i.name, i.description, i.power))
 
     if action.lower() == 'walk':
+        os.system('cls')
         Room.new_game = False
-        print(f'\n\t{bcolors.WARNING}..........{bcolors.ENDC}\n')
-        print('\n\tWhere do you want to go?')
+        print_location()
+        print(f'\n{bcolors.OKGREEN}******************{bcolors.ENDC}\n')
+        print('\tWhere do you want to go?')
         print('\tPlaces you can go...\n')
-        print('\t\n Use [N,E,S,W] to navigate.')
-        print('\t\n You can also type in north, east, south, or west')
-        print(f'\n\t{bcolors.WARNING}..........{bcolors.ENDC}\n')
+        print('\tUse [N,E,S,W] to navigate.')
+        print('\tYou can also type in north, east, south, or west')
+        print(f'\n{bcolors.OKGREEN}******************{bcolors.ENDC}\n')
         current_room = user.player_location
         curr = ""
         curr_key = ""
+
         # getting the keys of all possible rooms
         for key in room:
             # checking if key = current room key
@@ -205,22 +208,41 @@ def game_prompt():
                 elif curr_key == 'a3':
                     final = altered_array
 
+                # ...........................
+                if curr_key == 'a1':
+                    if room['a2'].name == 'Mario\'s Bedroom':
+                        room['a2'].name = f'{bcolors.FAIL}Mario\'s Bedroom{bcolors.ENDC}'
+                    if room['a3'].name == 'a hallway':
+                        room['a3'].name = f'{bcolors.WARNING}a hallway{bcolors.ENDC}'
+                    print(f'\nSeems like you can only go {bcolors.FAIL}north{bcolors.ENDC} or {bcolors.WARNING}east{bcolors.ENDC}.')
+                elif curr_key == 'a2':
+                    if room['a1'].name == 'Monika\'s Bedroom':
+                        room['a1'].name = f'{bcolors.OKBLUE}Monika\'s Bedroom{bcolors.ENDC}'
+                    if room['a3'].name == 'a hallway':
+                        room['a3'].name = f'{bcolors.WARNING}a hallway{bcolors.ENDC}'
+                    print(f'\nSeems like you can only go {bcolors.OKBLUE}south{bcolors.ENDC} or {bcolors.WARNING}east{bcolors.ENDC}.')
+                elif curr_key == 'a3':
+                    if room['a1'].name == 'Monika\'s Bedroom':
+                        room['a1'].name = f'{bcolors.OKBLUE}Monika\'s Bedroom{bcolors.ENDC}'
+                    if room['a2'].name == 'Mario\'s Bedroom':
+                        room['a2'].name = f'{bcolors.FAIL}Mario\'s Bedroom{bcolors.ENDC}'
+                    if room['a4'].name == 'Outside':
+                        room['a4'].name = f'{bcolors.WARNING}Outside{bcolors.ENDC}'
+                    print(f'\nSeems like you can only go {bcolors.OKBLUE}south{bcolors.ENDC}, {bcolors.WARNING}east{bcolors.ENDC} or {bcolors.FAIL}north{bcolors.ENDC}.')
+                # ...........................
+
                 for i in final:
                     value = room[i].name
                     print(f'\n\t{value}')
 
-                # ...........................
-                if curr_key == 'a1':
-                    print('\nSeems like you can only go north or east.')
-                elif curr_key == 'a2':
-                    print('\nSeems like you can only go south or east.')
-                elif curr_key == 'a3':
-                    print('\nSeems like you can only go south, east or north.')
-                # ...........................
-
                 # the logic here has to be relative to what info is in player location
                 walk_input = input('> ')
                 dest = walk_input
+                # re assign the color change
+                room['a1'].name = f'Monika\'s Bedroom'
+                room['a2'].name = f'Mario\'s Bedroom'
+                room['a3'].name = f'a hallway'
+                room['a4'].name = f'Outside'
                 UP = "up", 'north', 'n'
                 DOWN = "down", "south", 's'
                 LEFT = "left", "west", 'w'
