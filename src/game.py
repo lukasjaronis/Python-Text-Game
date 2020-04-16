@@ -227,9 +227,9 @@ def game_prompt():
                     if room['a1'].name == 'Monika\'s Bedroom':
                         room['a1'].name = f'{bcolors.OKBLUE}Monika\'s Bedroom{bcolors.ENDC}'
                     if room['a2'].name == 'Mario\'s Bedroom':
-                        room['a2'].name = f'{bcolors.FAIL}Mario\'s Bedroom{bcolors.ENDC}'
+                        room['a2'].name = f'{bcolors.WARNING}Mario\'s Bedroom{bcolors.ENDC}'
                     if room['a4'].name == 'Outside':
-                        room['a4'].name = f'{bcolors.WARNING}Outside{bcolors.ENDC}'
+                        room['a4'].name = f'{bcolors.FAIL}Outside{bcolors.ENDC}'
                     print(
                         f'\nSeems like you can only go {bcolors.OKBLUE}south{bcolors.ENDC}, {bcolors.WARNING}east{bcolors.ENDC} or {bcolors.FAIL}north{bcolors.ENDC}.')
                 # ...........................
@@ -252,9 +252,9 @@ def game_prompt():
                 RIGHT = "right", "east", 'e'
                 if curr_key == 'a1':
                     if dest in UP:
-                        user.player_location = 'a3'
-                    elif dest in RIGHT:
                         user.player_location = 'a2'
+                    elif dest in RIGHT:
+                        user.player_location = 'a3'
                     else:
                         print('You cannot go there!')
                 if curr_key == 'a2':
@@ -274,11 +274,6 @@ def game_prompt():
                     elif dest in LEFT:
                         print('You cannot go there!')
                 os.system('cls')
-
-        # walk_input = input('> ')
-        # dest = walk_input
-        # # would be like a1, a2, a3, a4, etc
-        # current_room = room[user.player_location]
 
 
 # Setup Game

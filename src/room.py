@@ -101,7 +101,6 @@ room['a3'].s_to = 'a1'  # Hallway => Monika's Bedroom
 room['a3'].e_to = 'a2'  # Hallway => Mario'S Bedroom
 room['a3'].n_to = 'a4'  # Hallway => Outside
 
-
 # Setting up Items
 room['a1'].items = [Item('Kai', 'The Squirrel Hunter', 'Powerful K9\'s'),
                     Item('Blanket', 'A blanket with doggos scent on it', 'Snuggle attack'),
