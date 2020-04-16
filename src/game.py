@@ -214,13 +214,15 @@ def game_prompt():
                         room['a2'].name = f'{bcolors.FAIL}Mario\'s Bedroom{bcolors.ENDC}'
                     if room['a3'].name == 'a hallway':
                         room['a3'].name = f'{bcolors.WARNING}a hallway{bcolors.ENDC}'
-                    print(f'\nSeems like you can only go {bcolors.FAIL}north{bcolors.ENDC} or {bcolors.WARNING}east{bcolors.ENDC}.')
+                    print(
+                        f'\nSeems like you can only go {bcolors.FAIL}north{bcolors.ENDC} or {bcolors.WARNING}east{bcolors.ENDC}.')
                 elif curr_key == 'a2':
                     if room['a1'].name == 'Monika\'s Bedroom':
                         room['a1'].name = f'{bcolors.OKBLUE}Monika\'s Bedroom{bcolors.ENDC}'
                     if room['a3'].name == 'a hallway':
                         room['a3'].name = f'{bcolors.WARNING}a hallway{bcolors.ENDC}'
-                    print(f'\nSeems like you can only go {bcolors.OKBLUE}south{bcolors.ENDC} or {bcolors.WARNING}east{bcolors.ENDC}.')
+                    print(
+                        f'\nSeems like you can only go {bcolors.OKBLUE}south{bcolors.ENDC} or {bcolors.WARNING}east{bcolors.ENDC}.')
                 elif curr_key == 'a3':
                     if room['a1'].name == 'Monika\'s Bedroom':
                         room['a1'].name = f'{bcolors.OKBLUE}Monika\'s Bedroom{bcolors.ENDC}'
@@ -228,7 +230,8 @@ def game_prompt():
                         room['a2'].name = f'{bcolors.FAIL}Mario\'s Bedroom{bcolors.ENDC}'
                     if room['a4'].name == 'Outside':
                         room['a4'].name = f'{bcolors.WARNING}Outside{bcolors.ENDC}'
-                    print(f'\nSeems like you can only go {bcolors.OKBLUE}south{bcolors.ENDC}, {bcolors.WARNING}east{bcolors.ENDC} or {bcolors.FAIL}north{bcolors.ENDC}.')
+                    print(
+                        f'\nSeems like you can only go {bcolors.OKBLUE}south{bcolors.ENDC}, {bcolors.WARNING}east{bcolors.ENDC} or {bcolors.FAIL}north{bcolors.ENDC}.')
                 # ...........................
 
                 for i in final:
@@ -322,25 +325,27 @@ def setup_game():
         if role.lower() in valid_options:
             if role.lower() == 'monika':
                 describe = 'The Artist'
+                os.system('cls')
+                print(f' You are {role.capitalize()}, {describe}!\n')
+                startup = '###'
+                print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (20 + len(startup))))
+                print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (20 + len(startup))))
+                print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (20 + len(startup))))
+                print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (20 + len(startup))))
+                print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (20 + len(startup))))
+                for character in startup:
+                    sleep(0.06)
+                    sys.stdout.write(character)
+                    sys.stdout.flush()
+                game_loop()
             elif role.lower() == 'kai':
                 describe = 'The Squirrel Hunter'
+                os.system('cls')
+                print(f' You are {role.capitalize()}, {describe}!\n')
             elif role.lower() == 'squirrel':
                 describe = 'The Ultra Fast Crackhead'
-            os.system('cls')
-            print(f' You are {role.capitalize()}, {describe}!\n')
-            os.system('cls')
-            startup = '###'
-            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
-            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
-            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
-            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
-            print(f'{bcolors.BOLD}#{bcolors.ENDC}' + (f'{bcolors.BOLD}#{bcolors.ENDC}' * (3 + len(startup))))
-            for character in startup:
-                sleep(0.06)
-                sys.stdout.write(character)
-                sys.stdout.flush()
-
-            game_loop()
+                os.system('cls')
+                print(f' You are {role.capitalize()}, {describe}!\n')
 
         else:
             while role.lower() not in valid_options:
